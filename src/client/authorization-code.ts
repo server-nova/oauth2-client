@@ -206,11 +206,11 @@ export async function getCodeChallenge(codeVerifier: string): Promise<['plain' |
 function getWebCrypto() {
 
   // Browsers
-  if ((typeof window !== 'undefined' && window.crypto)) {
+  if ((typeof window !== 'undefined' && window.crypto && window.crypto.subtle )) {
     return window.crypto;
   }
   // Web workers possibly
-  if ((typeof self !== 'undefined' && self.crypto)) {
+  if ((typeof self !== 'undefined' && self.crypto && window.crypto.subtle)) {
     return self.crypto;
   }
   // Node
@@ -241,4 +241,3 @@ function base64Url(buf: ArrayBuffer) {
       .replace(/=+$/, '')
   );
 }
-
